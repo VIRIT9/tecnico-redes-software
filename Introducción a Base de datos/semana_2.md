@@ -1,54 +1,69 @@
-# Semana 2: Conceptos Técnicos y Beneficios de las BD
+# Semana 2: Modelos de BD y Sistemas de Gestión (SGBD)
 
-## 1. Operaciones C.R.U.D.
-Es el "trabajo diario" de cualquier base de datos. Representa las cuatro operaciones básicas que realizamos sobre la información:
-* **C (Create):** Crear un registro nuevo (ej. dar de alta a un cliente).
-* **R (Read):** Leer o buscar datos (ej. consultar un saldo o buscar un nombre).
-* **U (Update):** Actualizar información (ej. cambiar la dirección de domicilio).
-* **D (Delete):** Borrar datos (ej. dar de baja un servicio o eliminar un registro).
+Un modelo de DB define la estructura lógica de cómo se organizan los datos, incluyendo las relaciones y restricciones entre ellos.
 
----
+## 1. Base de Datos Jerárquica (El Árbol)
+Es el modelo más antiguo. Organiza los datos en una estructura de árbol invertido.
+* **Estructura:** Un "padre" puede tener varios "hijos", pero cada hijo solo tiene un padre.
+* **Regla crítica:** Si eliminas al Padre, se borra todo lo que está abajo (nodos hijos).
+* **Uso:** Sistemas de archivos de SO y directorios de red (LDAP).
 
-## 2. ¿Qué es una Base de Datos (BD)?
-Es una colección organizada de datos estructurados, almacenados electrónicamente en un sistema informático. Su propósito es recopilar, gestionar y recuperar información de manera eficiente.
-
-### Diferencia Clave: RAM vs. Disco
-* **Memoria RAM (Random Access Memory):** Es volátil, lo que significa que toda la información se borra cuando se apaga el sistema.
-* **Base de Datos (Disco):** Es almacenamiento permanente. Los datos persisten aunque se apague la computadora.
+| Ventajas | Desventajas |
+| :--- | :--- |
+| Alto rendimiento en estructuras fijas. | Poca flexibilidad para datos no jerárquicos. |
+| Simplicidad para organigramas. | Genera redundancia si un hijo necesita varios padres. |
 
 ---
 
-## 3. Beneficios Principales de las Bases de Datos
-
-### A. Independencia de datos
-La forma física en que se almacena la información está separada de las aplicaciones. 
-* **Ventaja:** Permite cambiar el motor o la infraestructura (ej. de MySQL a PostgreSQL) sin tener que reescribir el software.
-
-### B. Reducción de redundancia e inconsistencia
-Centralizar los datos elimina la información duplicada. 
-* **Efecto:** Al actualizar un dato en un único lugar, todos los sistemas ven el cambio al instante, evitando valores contradictorios.
-
-### C. Integridad de los datos
-Reglas y restricciones automáticas para garantizar que los datos sean correctos:
-* **Integridad de entidad:** Cada registro debe ser único mediante la **Clave Primaria (PK)**.
-* **Integridad referencial:** Las relaciones entre tablas deben ser consistentes (ej. no borrar un cliente que tiene facturas activas).
-* **Integridad de dominio:** Los valores deben cumplir reglas específicas (ej. fechas válidas o campos numéricos).
-
-### D. Seguridad y Control de Acceso
-* **Autenticación:** Proceso de verificar la identidad del usuario (¿Quién eres?).
-* **Autorización:** Determina qué acciones tiene permitido realizar el usuario (¿Qué puedes hacer?).
-
-### E. Acceso Concurrente
-Varios usuarios pueden acceder y modificar datos simultáneamente sin que la información se corrompa:
-* **Bloqueos (Locks):** El sistema pone un cartel de "en uso" cuando alguien modifica un dato.
-* **Transacciones (ACID):** Operaciones de "todo o nada" para asegurar la validez de los datos.
+## 2. Base de Datos en Red
+Evolución del modelo jerárquico que rompe la rigidez del árbol.
+* **Estructura:** Permite relaciones de **Muchos a Muchos**. Un hijo puede tener varios padres.
+* **Navegación:** Usa **punteros** (flechas lógicas) para recorrer los datos. Si un puente se rompe, el nodo queda "huérfano".
+* **Uso:** Históricamente en bancos y reservas de aerolíneas.
 
 ---
 
-## 4. Respaldo y Recuperación (Backups)
-* **Respaldo Completo:** Una copia total de toda la base de datos (una "foto" completa).
-* **Respaldo Incremental:** Guarda solo los cambios realizados desde el último respaldo (ahorra espacio).
-* **Respaldo Diferencial:** Guarda todos los cambios realizados desde el último respaldo completo.
+## 3. Base de Datos Orientada a Objetos
+Almacena los datos como **objetos** (como en Java, C++ o Python).
+* **Innovación:** No solo guarda datos (atributos), sino también **métodos** (comportamientos o funciones que el objeto puede realizar).
+* **Uso:** Ingeniería (CAD), sistemas científicos y de geografía (GIS).
 
-## 5. Historia y Auditoría
-Mantiene un registro detallado de todos los cambios: quién creó el dato, qué cambió, cuándo se hizo y cómo quedó el estado final.
+---
+
+## 4. Base de Datos Relacional (El Estándar)
+Organiza la información en tablas (Entidades y Relaciones). Es el modelo más usado hoy.
+* **Características:** Estructura fija (el diseño se define antes de cargar los datos). Usa lenguaje **SQL**.
+* **Propiedades ACID (Garantía de validez):**
+    * **Atomicidad:** "Todo o nada". Si un paso falla, la transacción vuelve al inicio.
+    * **Consistencia:** Solo inicia operaciones que puede concluir bajo las reglas de integridad.
+    * **Aislamiento (Isolation):** Las operaciones son invisibles entre sí hasta que terminan.
+    * **Durabilidad:** Una vez guardado, el dato persiste aunque el sistema falle.
+
+
+
+---
+
+## 5. Bases de Datos No Relacionales (NoSQL)
+Diseñadas para datos no estructurados y grandes volúmenes. Priorizan la **rapidez** sobre la integridad estricta (no aplica ACID).
+* **Tipos comunes:**
+    * **Clave-Valor (Redis):** Carritos de compra.
+    * **Documentos (MongoDB):** Blogs y catálogos.
+    * **Grafos (Neo4j):** Redes sociales (amigos de amigos).
+    * **Columnas (Cassandra):** Big Data e IoT.
+
+---
+
+## VI. Caso de Éxito: NETFLIX (Modelo Híbrido)
+Netflix combina ambos mundos para ser eficiente:
+1. **SQL (MySQL):** Para facturación, cuentas de usuarios y datos maestros. Requiere consistencia total.
+2. **NoSQL (Cassandra/EVCache):** Para el historial de visualizaciones (billones de datos) y recomendaciones rápidas.
+
+---
+
+## VII. Sistema Gestor de Base de Datos (SGBD / DBMS)
+Es el software que actúa como intermediario entre nosotros y los datos físicos.
+
+| Concepto | Analogía | Definición |
+| :--- | :--- | :--- |
+| **Base de Datos** | El Contenido | Los archivos físicos (nombres, stock) guardados en disco. |
+| **SGBD** | La Herramienta | El programa que organiza, lee y escribe (MySQL, Oracle, PostgreSQL). |

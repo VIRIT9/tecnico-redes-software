@@ -1,69 +1,72 @@
-# Semana 3: Modelos de BD y Sistemas de Gestión (SGBD)
+# Semana 3: Modelo Entidad-Relación - Atributos y Componentes
 
-Un modelo de DB define la estructura lógica de cómo se organizan los datos, incluyendo las relaciones y restricciones entre ellos.
+Un atributo es una característica de una entidad (por ejemplo, el nombre de una persona o el precio de un producto).
 
-## 1. Base de Datos Jerárquica (El Árbol)
-Es el modelo más antiguo. Organiza los datos en una estructura de árbol invertido.
-* **Estructura:** Un "padre" puede tener varios "hijos", pero cada hijo solo tiene un padre.
-* **Regla crítica:** Si eliminas al Padre, se borra todo lo que está abajo (nodos hijos).
-* **Uso:** Sistemas de archivos de SO y directorios de red (LDAP).
+## 1. Tipos de Atributos
 
-| Ventajas | Desventajas |
-| :--- | :--- |
-| Alto rendimiento en estructuras fijas. | Poca flexibilidad para datos no jerárquicos. |
-| Simplicidad para organigramas. | Genera redundancia si un hijo necesita varios padres. |
+### Atributo Atómico (Simple)
+Es un componente que **no se puede dividir** en partes más pequeñas con significado propio.
+* **Ejemplo:** La Cédula de Identidad ($CI$) o el Nombre.
+* **Representación:** Se escribe generalmente en minúscula y debe estar encerrado en una **elipse** (óvalo) simple conectada a la entidad.
 
----
 
-## 2. Base de Datos en Red
-Evolución del modelo jerárquico que rompe la rigidez del árbol.
-* **Estructura:** Permite relaciones de **Muchos a Muchos**. Un hijo puede tener varios padres.
-* **Navegación:** Usa **punteros** (flechas lógicas) para recorrer los datos. Si un puente se rompe, el nodo queda "huérfano".
-* **Uso:** Históricamente en bancos y reservas de aerolíneas.
 
----
+### Atributo Compuesto
+Es aquel que tiene varias partes y se precisa de sus "sub-atributos" para estar completo.
+* **Ejemplo:** **Dirección**. Para que sea útil, se desglosa en:
+    * Calle
+    * Número de puerta
+    * Localidad/Barrio
+* **Representación:** Tanto el atributo principal como cada uno de sus hijos deben tener su **propia elipse individual**. Del óvalo principal salen líneas rectas que se ramifican hacia los óvalos de los sub-atributos.
 
-## 3. Base de Datos Orientada a Objetos
-Almacena los datos como **objetos** (como en Java, C++ o Python).
-* **Innovación:** No solo guarda datos (atributos), sino también **métodos** (comportamientos o funciones que el objeto puede realizar).
-* **Uso:** Ingeniería (CAD), sistemas científicos y de geografía (GIS).
-
----
-
-## 4. Base de Datos Relacional (El Estándar)
-Organiza la información en tablas (Entidades y Relaciones). Es el modelo más usado hoy.
-* **Características:** Estructura fija (el diseño se define antes de cargar los datos). Usa lenguaje **SQL**.
-* **Propiedades ACID (Garantía de validez):**
-    * **Atomicidad:** "Todo o nada". Si un paso falla, la transacción vuelve al inicio.
-    * **Consistencia:** Solo inicia operaciones que puede concluir bajo las reglas de integridad.
-    * **Aislamiento (Isolation):** Las operaciones son invisibles entre sí hasta que terminan.
-    * **Durabilidad:** Una vez guardado, el dato persiste aunque el sistema falle.
+> ⚠️ **Nota sobre el Asterisco (*):** Se utiliza para indicar que un atributo es **obligatorio** (Not Null). Si la Dirección tiene un asterisco, significa que el sistema no permitirá guardar el registro si ese campo está vacío.
 
 
 
 ---
 
-## 5. Bases de Datos No Relacionales (NoSQL)
-Diseñadas para datos no estructurados y grandes volúmenes. Priorizan la **rapidez** sobre la integridad estricta (no aplica ACID).
-* **Tipos comunes:**
-    * **Clave-Valor (Redis):** Carritos de compra.
-    * **Documentos (MongoDB):** Blogs y catálogos.
-    * **Grafos (Neo4j):** Redes sociales (amigos de amigos).
-    * **Columnas (Cassandra):** Big Data e IoT.
+## 2. Atributos según su Cardinalidad
+
+### Atributo Multivaluado
+Es un atributo que puede tener **más de un valor** para una misma entidad. Son opcionales en el sentido de que no siempre hay una cantidad fija.
+* **Ejemplo:** **Teléfono**. Un empleado puede tener un celular personal, uno de trabajo y un fijo.
+* **Representación:** En los diagramas se representa con una **doble elipse** (un círculo dentro de otro).
+
+
 
 ---
 
-## VI. Caso de Éxito: NETFLIX (Modelo Híbrido)
-Netflix combina ambos mundos para ser eficiente:
-1. **SQL (MySQL):** Para facturación, cuentas de usuarios y datos maestros. Requiere consistencia total.
-2. **NoSQL (Cassandra/EVCache):** Para el historial de visualizaciones (billones de datos) y recomendaciones rápidas.
+## 3. Atributos Derivados
+Son aquellos que **nacen a partir del cálculo de otro atributo** que ya existe en la base de datos. No se almacenan físicamente para ahorrar espacio.
+* **Ejemplos:**
+    * **Edad:** Se deriva de la *Fecha de Nacimiento*.
+    * **Sueldo Neto:** Se deriva de $(Horas\ de\ trabajo \times Valor\ hora) - Descuentos$.
+* **Representación:** Se dibuja con una **elipse de línea punteada** o discontinua.
+
+
 
 ---
 
-## VII. Sistema Gestor de Base de Datos (SGBD / DBMS)
-Es el software que actúa como intermediario entre nosotros y los datos físicos.
+## 4. Conceptos de Modificación
+* **Registro:** Se refiere al acto de hacer una modificación en la Base de Datos (insertar, actualizar o borrar datos).
 
-| Concepto | Analogía | Definición |
-| :--- | :--- | :--- |
-| **Base de Datos** | El Contenido | Los archivos físicos (nombres, stock) guardados en disco. |
-| **SGBD** | La Herramienta | El programa que organiza, lee y escribe (MySQL, Oracle, PostgreSQL). |
+## 5. Ejemplo de Estructura: Departamentos
+Las entidades pueden agruparse o clasificarse. Por ejemplo, una empresa tiene diferentes departamentos:
+* RR.HH.
+* TI (Tecnología de la Información)
+* Marketing.
+
+---
+
+## 💡 Información Extra 
+* **Atributo Clave (Key):** Es el atributo que identifica de forma única a cada entidad (como tu $CI$). En el diagrama, el nombre del atributo debe ir dentro de una elipse y **subrayado**.
+* **Atributos Nulos (Null):** A veces un atributo puede no tener valor (ej. no tener teléfono fijo). Es vital definir si un campo permite nulos o es obligatorio.
+* **¿Por qué usar Atributos Derivados?** Evitan datos redundantes. Al guardar la fecha de nacimiento, la edad se calcula automáticamente y siempre está actualizada.
+
+---
+
+## 📸 Ejemplo Práctico: Entidad Empleado
+En este diagrama se puede observar la aplicación real de todos los conceptos anteriores: el atributo clave (PK) subrayado, los compuestos ramificados, los multivaluados con doble elipse y el derivado punteado.
+
+![Diagrama de Entidad Empleado](./imagenes/diagrama-empleado.jpg)
+---
