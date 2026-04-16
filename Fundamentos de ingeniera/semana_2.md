@@ -1,4 +1,4 @@
-# Semana 2
+# Semana 2: Fundamentos de Ingeniería
 
 > **Nota:** No se dictaron clases presenciales durante esta semana por falta del docente.
 

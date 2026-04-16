@@ -1,4 +1,4 @@
-# Fundamentos de Ingeniería de Software 🏗️
+# Semana 4: Fundamentos de Ingeniería
 
 ## 1. Problemática del Desarrollo de Software
 Desarrollar software es una tarea **compleja por naturaleza**. No se trata solo de codificar, sino de gestionar una serie de desafíos críticos:
