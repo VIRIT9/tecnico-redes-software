@@ -8,14 +8,14 @@
 
 El contenido está organizado por carpetas según la asignatura:
 
-* **Diseño Web**
-* **Fundamentos de Ingeniería**
-* **Fundamentos de STEAM**
-* **Inglés Técnico**
-* **Introducción a Base de Datos**
-* **Introducción a la Programación**
-* **Introducción a Redes Microsoft**
-* **Introducción a Linux**
+* [🌐 **Diseño Web**](./diseno-web/)
+* [⚙️ **Fundamentos de Ingeniería**](./fundamentos-ingenieria/)
+* [🔬 **Fundamentos de STEAM**](./fundamentos-de-steam/)
+* [US **Inglés Técnico**](./ingles-tecnico/)
+* [🗄️ **Introducción a Base de Datos**](./introduccion-base-de-datos/)
+* [💻 **Introducción a la Programación**](./introducción-programacion/)
+* [🖥️ **Introducción a Redes Microsoft**](./introduccion-redes-microsoft/)
+* [🐧 **Introducción a Linux**](./introduccion-linux/)
 
 ## 🛠️ Herramientas utilizadas
 * **Documentación:** Markdown
